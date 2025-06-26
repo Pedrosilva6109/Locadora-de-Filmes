@@ -1,213 +1,133 @@
-CREATE TABLE aluguel (
+-- CRIAÇÃO DAS TABELAS
 
-	id serial,
-
-	data_aluguel timestamp,
-
-	id_inventario int,
-
-	id_cliente int,
-
-	data_devolucao timestamp,
-
-	id_funcionario int,
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE ator (
-
-	id serial,
-
-	nome varchar(45),
-
-	sobrenome varchar(45),
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE categoria (
-
-	categoria_id serial,
-
-	nome varchar(80),
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE categoria_filme (
-	filme_id serial,
-	categoria_id serial,
-	ultimo_atualizacao timestamp
-);
-CREATE TABLE cidade (
-
-	id serial,
-
-	nome varchar(50),
-
-	id_pais int,
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE cliente (
-
-	id serial,
-
-	id_loja int,
-
-	nome varchar(45),
-
-	sobrenome varchar(45),
-
-	email varchar(50),
-
-	id_endereco int,
-
-	ativo bool,
-
-	data_criacao date,
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE endereco (
-
-	id serial,
-
-	endereco varchar(50),
-
-	complemento varchar(50),
-
-	distrito varchar(20),
-
-	id_cidade int,
-
-	cep varchar(10),
-
-	telefone varchar(20),
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE filme (
-
-	filme_id serial,
-
-	titulo varchar(50),
-
-	description text,
-
-	lancamento_ano bpchar(4),
-
-	linguagem_id int,
-
-	aluguel_duracao varchar(20),
-
-	taxa_aluguel numeric(4, 2),
-
-	duracao varchar(10),
-
-	custo_reposicao numeric(4, 2),
-
-	avaliacao numeric(1, 1),
-
-	ultima_atualizacao timestamp,
-
-	recursos_especiais varchar(50),
-
-	texto_inteiro text
-
-);
-CREATE TABLE filme_ator (
-
-	id_ator int,
-
-	id_filme int,
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE funcionario (
-
-	id serial,
-
-	nome varchar(45),
-
-	sobrenome varchar(45),
-
-	id_endereco int,
-
-	email varchar(50),
-
-	id_loja int,
-
-	ativo bool,
-
-	usuario varchar(16),
-
-	senha varchar(40),
-
-	ultima_atualizacao timestamp,
-
-	foto bytea
-
-);
-CREATE TABLE idioma (
-
-	id serial,
-
-	nome varchar(20),
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE inventario (
-
-	id serial,
-
-	id_filme int,
-
-	id_loja int,
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE loja (
-
-	id serial,
-
-	id_gerente int,
-
-	id_endereco int,
-
-	ultima_atualizacao timestamp
-
-);
-CREATE TABLE pagamento (
-
-	id serial,
-
-	id_cliente int,
-
-	id_funcionario int,
-
-	id_aluguel int,
-
-	valor numeric(5, 2),
-
-	data_pagamento timestamp
-
-);
 CREATE TABLE pais (
+    pais_id serial,
+    nome varchar(50),
+    ultima_atualizacao timestamp
+);
 
-	id serial,
+CREATE TABLE cidade (
+    cidade_id serial,
+    nome varchar(50),
+    pais_id int,
+    ultima_atualizacao timestamp
+);
 
-	nome varchar(50),
+CREATE TABLE endereco (
+    endereco_id serial,
+    endereco varchar(50),
+    complemento varchar(50),
+    distrito varchar(20),
+    cidade_id int,
+    cep varchar(10),
+    telefone varchar(20),
+    ultima_atualizacao timestamp
+);
 
-	ultima_atualizacao timestamp
+CREATE TABLE loja (
+    loja_id serial,
+    gerente_id int,
+    endereco_id int,
+    ultima_atualizacao timestamp
+);
 
+CREATE TABLE funcionario (
+    funcionario_id serial,
+    nome varchar(45),
+    sobrenome varchar(45),
+    endereco_id int,
+    email varchar(50),
+    loja_id int,
+    ativo bool,
+    usuario varchar(16),
+    senha varchar(40),
+    ultima_atualizacao timestamp,
+    foto bytea
+);
+
+CREATE TABLE cliente (
+    cliente_id serial,
+    loja_id int,
+    nome varchar(45),
+    sobrenome varchar(45),
+    email varchar(50),
+    endereco_id int,
+    ativo bool,
+    data_criacao date,
+    ultima_atualizacao timestamp
+);
+
+CREATE TABLE idioma (
+    idioma_id serial,
+    nome varchar(20),
+    ultima_atualizacao timestamp
+);
+
+CREATE TABLE filme (
+    filme_id serial,
+    titulo varchar(50),
+    descricao text,
+    lancamento_ano char(4),
+    idioma_id int,
+    aluguel_duracao varchar(20),
+    taxa_aluguel numeric(4, 2),
+    duracao varchar(10),
+    custo_reposicao numeric(4, 2),
+    avaliacao numeric(1, 1),
+    ultima_atualizacao timestamp,
+    recursos_especiais varchar(50),
+    texto_inteiro text
+);
+
+CREATE TABLE inventario (
+    inventario_id serial,
+    filme_id int,
+    loja_id int,
+    ultima_atualizacao timestamp
+);
+
+CREATE TABLE aluguel (
+    aluguel_id serial,
+    data_aluguel timestamp,
+    inventario_id int,
+    cliente_id int,
+    data_devolucao timestamp,
+    funcionario_id int,
+    ultima_atualizacao timestamp
+);
+
+CREATE TABLE pagamento (
+    pagamento_id serial,
+    cliente_id int,
+    funcionario_id int,
+    aluguel_id int,
+    valor numeric(5, 2),
+    data_pagamento timestamp
+);
+
+CREATE TABLE ator (
+    ator_id serial,
+    nome varchar(45),
+    sobrenome varchar(45),
+    ultima_atualizacao timestamp
+);
+
+CREATE TABLE filme_ator (
+    ator_id int,
+    filme_id int,
+    ultima_atualizacao timestamp
+);
+
+CREATE TABLE categoria (
+    categoria_id serial,
+    nome varchar(80),
+    ultima_atualizacao timestamp
+);
+
+CREATE TABLE filme_categoria (
+    filme_id int,
+    categoria_id int,
+    ultima_atualizacao timestamp
 );
 
 --remover coluna
